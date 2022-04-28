@@ -32,25 +32,31 @@ extension TrainTableViewController: UITableViewDataSource {
         if let trains = trainings {
             let model = trainArr[indexPath.section][indexPath.row]
             
-            for el in trains.trainers {
-                if el.id == model.coachID {
-                    cell.coachNameLabel.text = el.fullName
-                    break
-                }
+            for el in trains.trainers where el.id == model.coachID {
+                cell.coachNameLabel.text = el.fullName
+                break
             }
-            cell.flagTrainView.backgroundColor = UIColor(hex: model.color.rawValue)
-            cell.startTimeLabel.text = model.startTime
-            cell.endTimeLabel.text = model.endTime
-            cell.trainNameLabel.text = model.name
-            cell.locationNameLabel.text = model.place.rawValue
+            setData(cell, model)
         } else {
-            cell.coachNameLabel.text = ""
-            cell.flagTrainView.backgroundColor = .white
-            cell.startTimeLabel.text = ""
-            cell.endTimeLabel.text = ""
-            cell.trainNameLabel.text = ""
-            cell.locationNameLabel.text = ""
+            setEmptyData(cell)
         }
         return cell
+    }
+    
+    func setData(_ cell: CustomCell,_ model: Lesson) {
+        cell.flagTrainView.backgroundColor = UIColor(hex: model.color.rawValue)
+        cell.startTimeLabel.text = model.startTime
+        cell.endTimeLabel.text = model.endTime
+        cell.trainNameLabel.text = model.name
+        cell.locationNameLabel.text = model.place.rawValue
+    }
+    
+    func setEmptyData(_ cell: CustomCell) {
+        cell.coachNameLabel.text = ""
+        cell.flagTrainView.backgroundColor = .white
+        cell.startTimeLabel.text = ""
+        cell.endTimeLabel.text = ""
+        cell.trainNameLabel.text = ""
+        cell.locationNameLabel.text = ""
     }
 }
