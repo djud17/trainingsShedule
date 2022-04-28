@@ -29,17 +29,20 @@ extension TrainTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "trainCell") as! CustomCell
         
-        if let trains = trainings {
-            let model = trainArr[indexPath.section][indexPath.row]
-            
-            for el in trains.trainers where el.id == model.coachID {
-                cell.coachNameLabel.text = el.fullName
-                break
-            }
-            setData(cell, model)
-        } else {
+        guard let trains = trainings else {
             setEmptyData(cell)
+            return cell
         }
+        
+        let model = trainArr[indexPath.section][indexPath.row]
+        
+        for el in trains.trainers where el.id == model.coachID {
+            cell.coachNameLabel.text = el.fullName
+            break
+        }
+        
+        setData(cell, model)
+
         return cell
     }
     

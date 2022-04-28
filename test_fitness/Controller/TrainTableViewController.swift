@@ -59,18 +59,20 @@ class TrainTableViewController: UIViewController {
     // Обработка полученных данных
     
     private func parsingData() {
-        if let trains = trainings {
-            for el in trains.lessons where !(dateArr.contains(el.date)) {
-                dateArr.append(el.date)
+        guard let trains = trainings else { return }
+        
+        for el in trains.lessons where !(dateArr.contains(el.date)) {
+            dateArr.append(el.date)
+        }
+
+        dateArr.sort() {$0 < $1}
+        
+        for (i, el) in dateArr.enumerated() {
+            trainArr.append([Lesson]())
+            for lesson in trains.lessons where el == lesson.date {
+                trainArr[i].append(lesson)
             }
-            dateArr.sort() {$0 < $1}
-            for (i, el) in dateArr.enumerated() {
-                trainArr.append([Lesson]())
-                for lesson in trains.lessons where el == lesson.date {
-                    trainArr[i].append(lesson)
-                }
-                trainArr[i].sort() {$0.startTime < $1.startTime}
-            }
+            trainArr[i].sort() {$0.startTime < $1.startTime}
         }
     }
 }
