@@ -7,30 +7,14 @@
 
 import UIKit
 
-extension TrainTableViewController: UITableViewDataSource {
+extension TrainTableViewController: UITableViewDataSource {    
     func numberOfSections(in tableView: UITableView) -> Int {
         return dateArr.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sepText = dateArr[section].components(separatedBy: "-")
-        var sectionName = sepText[2] + " "
-        
-        switch sepText[1] {
-        case "01": sectionName += "Января"
-        case "02": sectionName += "Февраля"
-        case "03": sectionName += "Марта"
-        case "04": sectionName += "Апреля"
-        case "05": sectionName += "Мая"
-        case "06": sectionName += "Июня"
-        case "07": sectionName += "Июля"
-        case "08": sectionName += "Августа"
-        case "09": sectionName += "Сентября"
-        case "10": sectionName += "Октября"
-        case "11": sectionName += "Ноября"
-        case "12": sectionName += "Декабря"
-        default: sectionName += ""
-        }
+        let sectionName = sepText[2] + " " + (monthDict[sepText[1]] ?? "")
         
         tableView.backgroundColor = .white
         tableView.sectionHeaderHeight = 20
